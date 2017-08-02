@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreator } from 'redux';
-import { getFriends } from '../Actions';
-import { addFriend } from '../Actions';
-import { updateFriend } from '../Actions';
+import { getFriends, addFriend, updateFriend } from '../Actions';
 import Friend  from './Friend';
 
  class FriendsList extends Component {
