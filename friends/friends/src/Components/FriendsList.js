@@ -15,13 +15,13 @@ import Friend  from './Friend';
   componentDidMount() {
     this.props.getFriends();
   }
-
+// clear all inputs, its like clearing local component state but instead we are going to DOM state
   clearInput = () => {
     this.refs.inputName.value = '';
     this.refs.inputAge.value = '';
     this.refs.inputEmail.value = '';
   };
-
+//just returns an object based on what the field value is now.
   inputValues = () => {
     return {
       name: this.refs.inputName.value.trim(),
@@ -29,9 +29,10 @@ import Friend  from './Friend';
       email: this.refs.inputEmail.value.trim(),
     }
   };
-
+// once you try to submit the function, it will be "PREVENT" and then sent
   handleSubmit = (e) => {
     e.preventDefault();
+    //check if there is already a user containing the name of the input field.  if there is, will update that user
     for(let i = 0; i < this.props.friends.length; i++){
       let friend = this.props.friends[i];
       if (friend.name === this.refs.inputName.value) {
@@ -40,6 +41,7 @@ import Friend  from './Friend';
         return;
       }
     }
+    //if there is not will add a new friend and clear the inputs state
     this.props.addFriend(this.inputValues());
     this.clearInput();
   };
