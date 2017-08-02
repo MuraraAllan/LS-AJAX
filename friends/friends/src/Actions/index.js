@@ -14,10 +14,9 @@ export const addFriend = (object) => {
      'age': object.age,
      'email': object.email
    });
-  console.log(promise);
   return {
-    type: 'ADD_FRIEND',
-    payload: object
+    type: 'GET_FRIENDS',
+    payload: promise
   };
 };
 
@@ -28,8 +27,8 @@ export const updateFriend = (friend) => {
     }
   );
   return {
-    type: 'UPDATE_FRIEND',
-    payload: friend
+    type: 'GET_FRIENDS',
+    payload: promise
   };
 };
 
@@ -39,7 +38,7 @@ export const deleteFriend = (friend) => {
   }
   );
   return {
-    type: 'DELETE_FRIEND',
-    payload: friend
+    type: 'GET_FRIENDS',
+    payload: promise
   };
 };

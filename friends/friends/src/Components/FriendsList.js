@@ -7,41 +7,43 @@ import { updateFriend } from '../Actions';
 import Friend  from './Friend';
 
  class FriendsList extends Component {
-   constructor(props) {
-     super(props);
+  //  constructor(props) {
+  //    super(props);
+  //    this.state = {
+  //      friends: this.props.getFriends()
+  //    };
+  //    let input = '';
+  //  }
+  componentDidMount() {
+    this.props.getFriends();
+  }
 
-     this.state = {
-       friends: this.props.getFriends()
-     };
-     let input = '';
-   }
-  // componentDidMount() {
-  //   this.props.getFriends();
-  // }
+  clearInput = () => {
+    this.refs.inputName.value = '';
+    this.refs.inputAge.value = '';
+    this.refs.inputEmail.value = '';
+  };
+
+  inputValues = () => {
+    return {
+      name: this.refs.inputName.value.trim(),
+      age: this.refs.inputAge.value.trim(),
+      email: this.refs.inputEmail.value.trim(),
+    }
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    let operation = [];
-    this.props.friends.map((item, index) => {
-      if (item.name === this.refs.inputName.value) {
-        operation.push('update');
-        operation.push(index);
+    for(let i = 0; i < this.props.friends.length; i++){
+      let friend = this.props.friends[i];
+      if (friend.name === this.refs.inputName.value) {
+        this.props.updateFriend([this.inputValues(), i]);
+        this.clearInput();
         return;
       }
-    });
-    if (operation[0] === 'update') {
-      this.props.updateFriend([{
-        name: this.refs.inputName.value,
-        age: this.refs.inputAge.value,
-        email: this.refs.inputEmail.value,
-      }, operation[1]]);
-      return;
     }
-    this.props.addFriend({
-      name: this.refs.inputName.value,
-      age: this.refs.inputAge.value,
-      email: this.refs.inputEmail.value,
-    })
+    this.props.addFriend(this.inputValues());
+    this.clearInput();
   };
 
   render() {
@@ -56,8 +58,8 @@ import Friend  from './Friend';
         </ul>
         <form onSubmit={this.handleSubmit}>
           <input ref="inputName" placeholder="Name"/>
-          <input ref="inputAge" placeholder="Age"/>
-          <input ref="inputEmail" placeholder="E-mail"/>
+          <input ref="inputAge" type='number' placeholder="Age"/>
+          <input ref="inputEmail" type='email' placeholder="E-mail"/>
           <button type="submit">Submit</button>
         </form>
       </div>
